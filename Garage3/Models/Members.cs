@@ -9,12 +9,15 @@ namespace Garage3.Models
     public class Members
     {
         public int Id { get; set; }
+        [Display(Name = "Personal Number")]
+        public string PersonNr { get; set; }
 
         [Display(Name = "First Name")]
         public string FristName { get; set; }
 
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
-        public ICollection<Vehicles> Vehicle { get; set; }
+
+        public ICollection<Vehicles> Vehicles { get; set; }
     }
 }
