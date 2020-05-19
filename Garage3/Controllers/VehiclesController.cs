@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Garage3.Data;
 using Garage3.Models;
+using Garage3.Models.ViewModels;
 
 namespace Garage3.Controllers
 {
@@ -22,7 +23,7 @@ namespace Garage3.Controllers
         // GET: Vehicles
         public async Task<IActionResult> Index()
         {
-            var garage3Context = _context.Vehicles.Include(v => v.Member).Include(v => v.VehicleType);
+            var garage3Context = _context.Vehicles.Include(v => v.Members).Include(v => v.VehicleTypes);
             return View(await garage3Context.ToListAsync());
         }
 
@@ -35,8 +36,8 @@ namespace Garage3.Controllers
             }
 
             var vehicles = await _context.Vehicles
-                .Include(v => v.Member)
-                .Include(v => v.VehicleType)
+                .Include(v => v.Members)
+                .Include(v => v.VehicleTypes)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (vehicles == null)
             {
@@ -47,7 +48,7 @@ namespace Garage3.Controllers
         }
 
         // GET: Vehicles/Create
-        public IActionResult Create()
+        public IActionResult Park()
         {
             ViewData["MemberId"] = new SelectList(_context.Set<Members>(), "Id", "Id");
             ViewData["VehicleTypeId"] = new SelectList(_context.Set<VehicleTypes>(), "Id", "Id");
@@ -67,8 +68,8 @@ namespace Garage3.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MemberId"] = new SelectList(_context.Set<Members>(), "Id", "Id", vehicles.MemberId);
-            ViewData["VehicleTypeId"] = new SelectList(_context.Set<VehicleTypes>(), "Id", "Id", vehicles.VehicleTypeId);
+            ViewData["MemberId"] = new SelectList(_context.Set<Members>(), "Id", "Id", vehicles.MembersId);
+            ViewData["VehicleTypeId"] = new SelectList(_context.Set<VehicleTypes>(), "Id", "Id", vehicles.VehicleTypesId);
             return View(vehicles);
         }
 
@@ -85,8 +86,8 @@ namespace Garage3.Controllers
             {
                 return NotFound();
             }
-            ViewData["MemberId"] = new SelectList(_context.Set<Members>(), "Id", "Id", vehicles.MemberId);
-            ViewData["VehicleTypeId"] = new SelectList(_context.Set<VehicleTypes>(), "Id", "Id", vehicles.VehicleTypeId);
+            ViewData["MemberId"] = new SelectList(_context.Set<Members>(), "Id", "Id", vehicles.MembersId);
+            ViewData["VehicleTypeId"] = new SelectList(_context.Set<VehicleTypes>(), "Id", "Id", vehicles.VehicleTypesId);
             return View(vehicles);
         }
 
@@ -122,8 +123,8 @@ namespace Garage3.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MemberId"] = new SelectList(_context.Set<Members>(), "Id", "Id", vehicles.MemberId);
-            ViewData["VehicleTypeId"] = new SelectList(_context.Set<VehicleTypes>(), "Id", "Id", vehicles.VehicleTypeId);
+            ViewData["MemberId"] = new SelectList(_context.Set<Members>(), "Id", "Id", vehicles.MembersId);
+            ViewData["VehicleTypeId"] = new SelectList(_context.Set<VehicleTypes>(), "Id", "Id", vehicles.VehicleTypesId);
             return View(vehicles);
         }
 
@@ -136,8 +137,8 @@ namespace Garage3.Controllers
             }
 
             var vehicles = await _context.Vehicles
-                .Include(v => v.Member)
-                .Include(v => v.VehicleType)
+                .Include(v => v.Members)
+                .Include(v => v.VehicleTypes)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (vehicles == null)
             {
@@ -161,6 +162,24 @@ namespace Garage3.Controllers
         private bool VehiclesExists(int id)
         {
             return _context.Vehicles.Any(e => e.Id == id);
+        }
+        public async Task<IActionResult> DetailView()
+        {
+            var model = await _context.Vehicles
+                .Include(t => t.VehicleTypes)
+                .Include(t => t.Members)
+                .Select(t => new DetailsViewModel
+                {
+                    RegNumber = t.RegNumber,
+                    TimeOfParking = t.TimeOfParking,
+                    Color = t.Color,
+                    Brand = t.Brand,
+                    NumberOfWheels = t.NumberOfWheels,
+                    Model = t.Model,
+                    FullName = t.Members.FristName + " " +  t.Members.LastName
+                }).ToListAsync();
+            return View(model);
+
         }
     }
 }
