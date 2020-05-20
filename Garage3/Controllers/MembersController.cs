@@ -19,13 +19,13 @@ namespace Garage3.Controllers
             _context = context;
         }
 
-        // GET: Members
+        // GET: Members1
         public async Task<IActionResult> Index()
         {
             return View(await _context.Members.ToListAsync());
         }
 
-        // GET: Members/Details/5
+        // GET: Members1/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -43,18 +43,18 @@ namespace Garage3.Controllers
             return View(members);
         }
 
-        // GET: Members/Create
+        // GET: Members1/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Members/Create
+        // POST: Members1/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FristName,LastName")] Members members)
+        public async Task<IActionResult> Create([Bind("Id,PersonNr,FristName,LastName")] Members members)
         {
             if (ModelState.IsValid)
             {
@@ -65,7 +65,7 @@ namespace Garage3.Controllers
             return View(members);
         }
 
-        // GET: Members/Edit/5
+        // GET: Members1/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -81,12 +81,12 @@ namespace Garage3.Controllers
             return View(members);
         }
 
-        // POST: Members/Edit/5
+        // POST: Members1/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,FristName,LastName")] Members members)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,PersonNr,FristName,LastName")] Members members)
         {
             if (id != members.Id)
             {
@@ -116,7 +116,7 @@ namespace Garage3.Controllers
             return View(members);
         }
 
-        // GET: Members/Delete/5
+        // GET: Members1/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -134,7 +134,7 @@ namespace Garage3.Controllers
             return View(members);
         }
 
-        // POST: Members/Delete/5
+        // POST: Members1/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

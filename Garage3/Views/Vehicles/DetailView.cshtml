@@ -1,0 +1,58 @@
+﻿@model IEnumerable<Garage3.Models.ViewModels.DetailsViewModel> 
+@{
+    ViewData["Title"] = "DetailView";
+}
+
+<h1>DetailView</h1>
+
+
+<p>
+    <a asp-action="Create">Park Vehicle</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.RegNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TimeOfParking)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.VehicleTypes)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Members)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RegNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TimeOfParking)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.VehicleTypes.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Members.Id)
+                </td>
+                <td>
+
+                    @Html.ActionLink("Edit", "Edit", new { })
+                    @Html.ActionLink("Details", "Details", new { })
+                    @Html.ActionLink("Delete", "Delete", new { })
+                    
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

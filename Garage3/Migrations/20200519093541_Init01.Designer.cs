@@ -4,14 +4,16 @@ using Garage3.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Garage3.Migrations
 {
     [DbContext(typeof(Garage3Context))]
-    partial class Garage3ContextModelSnapshot : ModelSnapshot
+    [Migration("20200519093541_Init01")]
+    partial class Init01
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,9 +32,6 @@ namespace Garage3.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PersonNr")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

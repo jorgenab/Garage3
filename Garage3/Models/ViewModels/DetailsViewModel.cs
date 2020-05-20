@@ -2,15 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 
-namespace Garage3.Models
+namespace Garage3.Models.ViewModels
 {
-    public class Vehicles
+    public class DetailsViewModel
     {
-        public int Id { get; set; }
-
         [Display(Name = "Registration Number")]
         public string RegNumber { get; set; }
 
@@ -19,7 +16,7 @@ namespace Garage3.Models
         public string Color { get; set; }
 
         [Display(Name = "Number of Wheels")]
-        [Range(0,10, ErrorMessage = "No more that 10 Wheels")]
+        [Range(0, 10, ErrorMessage = "No more that 10 Wheels")]
         public int NumberOfWheels { get; set; }
 
         [Display(Name = "Vehicle Brand")]
@@ -30,15 +27,14 @@ namespace Garage3.Models
 
 
         //Forigen Keys
-        public int VehicleTypesId { get; set; }
-        public int MembersId { get; set; }
+        public int VehicleTypeId { get; set; }
+        public int MemberId { get; set; }
+
+        public string FullName { get; set; }
 
         //Navigation Properties
 
         public VehicleTypes VehicleTypes { get; set; }
         public Members Members { get; set; }
-
-        
-
     }
 }

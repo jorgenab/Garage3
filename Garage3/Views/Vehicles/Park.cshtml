@@ -1,16 +1,16 @@
 ﻿@model Garage3.Models.Vehicles
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Park";
 }
 
-<h1>Create</h1>
+<h1>Parked Vehicles</h1>
 
-<h4>Vehicles</h4>
+
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Park">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="RegNumber" class="control-label"></label>
@@ -43,12 +43,12 @@
                 <span asp-validation-for="Model" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="VehicleTypeId" class="control-label"></label>
-                <select asp-for="VehicleTypeId" class ="form-control" asp-items="ViewBag.VehicleTypeId"></select>
+                <label asp-for="VehicleTypesId" class="control-label"></label>
+                <select asp-for="VehicleTypesId" class ="form-control" asp-items="ViewBag.VehicleTypeId"></select>
             </div>
             <div class="form-group">
-                <label asp-for="MemberId" class="control-label"></label>
-                <select asp-for="MemberId" class ="form-control" asp-items="ViewBag.MemberId"></select>
+                <label asp-for="MembersId" class="control-label"></label>
+                <select asp-for="MembersId" class ="form-control" asp-items="ViewBag.MemberId"></select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
@@ -58,7 +58,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Back to Garage</a>
 </div>
 
 @section Scripts {

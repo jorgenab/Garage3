@@ -11,6 +11,6 @@ namespace Garage3.Models
         public int Id { get; set; }
         [Display(Name = "Type of Vehicle")]
         public string TypeOfVehicle { get; set; }
-        public ICollection<Vehicles> Vehicle { get; set; }
+        public ICollection<Vehicles> Vehicles { get; set; }
     }
 }
