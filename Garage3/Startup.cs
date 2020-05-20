@@ -1,4 +1,5 @@
 ﻿using System;
+using AutoMapper;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -29,6 +30,8 @@ namespace Garage3
 
             services.AddDbContext<Garage3Context>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("Garage3Context")));
+
+             services.AddAutoMapper(typeof(Startup));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

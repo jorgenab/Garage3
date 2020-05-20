@@ -26,11 +26,13 @@ namespace Garage3.Models.ViewModels
         public string Model { get; set; }
 
 
+         public string FullName { get; set; }
+
         //Forigen Keys
         public int VehicleTypeId { get; set; }
         public int MemberId { get; set; }
 
-        public string FullName { get; set; }
+       
 
         //Navigation Properties
 

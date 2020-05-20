@@ -24,7 +24,7 @@ namespace Garage3.Controllers
                        from => from.MapFrom(s => s.VehicleTypes.TypeOfVehicle))
                 .ForMember(
                        dest => dest.FullName,
-                       from => from.MapFrom(s => s.Members.FullName);
+                       from => from.MapFrom(s => s.Members.FullName));
 
         }
     }
