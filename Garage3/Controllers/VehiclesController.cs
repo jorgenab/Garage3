@@ -8,37 +8,36 @@ using Microsoft.EntityFrameworkCore;
 using Garage3.Data;
 using Garage3.Models;
 using Garage3.Models.ViewModels;
+using AutoMapper;
 
 namespace Garage3.Controllers
 {
     public class VehiclesController : Controller
     {
         private readonly Garage3Context _context;
+        private readonly IMapper mapper;
 
-        public VehiclesController(Garage3Context context)
+        public VehiclesController(Garage3Context context, IMapper mapper)
         {
             _context = context;
+            this.mapper = mapper;
         }
 
         // GET: Vehicles
         public async Task<IActionResult> Index()
         {
-            var garage3Context = _context.Vehicles.Include(v => v.Members).Include(v => v.VehicleTypes);
-            return View(await garage3Context.ToListAsync());
+            var model = await mapper.Project<DetailsViewModel>(_context.Vehicles).ToListAsync();
+            return View(model);
+
         }
 
         // GET: Vehicles/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            var vehicles = await mapper.ProjectTo<DetailsViewModel>
+                (_context.Vehicles).FirstOrDefaultAsync(s => s.Id == id);
 
-            var vehicles = await _context.Vehicles
-                .Include(v => v.Members)
-                .Include(v => v.VehicleTypes)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            
             if (vehicles == null)
             {
                 return NotFound();
@@ -48,10 +47,11 @@ namespace Garage3.Controllers
         }
 
         // GET: Vehicles/Create
-        public IActionResult Park()
+        public IActionResult Park(DetailsViewModel viewModel)
         {
-            ViewData["MemberId"] = new SelectList(_context.Set<Members>(), "Id", "Id");
-            ViewData["VehicleTypeId"] = new SelectList(_context.Set<VehicleTypes>(), "Id", "Id");
+
+            ViewData["MembersId"] = new SelectList(_context.Set<Members>(), "Id", "Id");
+            ViewData["VehicleTypesId"] = new SelectList(_context.Set<VehicleTypes>(), "Id", "Id");
             return View();
         }
 
@@ -68,8 +68,8 @@ namespace Garage3.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MemberId"] = new SelectList(_context.Set<Members>(), "Id", "Id", vehicles.MembersId);
-            ViewData["VehicleTypeId"] = new SelectList(_context.Set<VehicleTypes>(), "Id", "Id", vehicles.VehicleTypesId);
+            ViewData["MembersId"] = new SelectList(_context.Set<Members>(), "Id", "Id", vehicles.MembersId);
+            ViewData["VehicleTypesId"] = new SelectList(_context.Set<VehicleTypes>(), "Id", "Id", vehicles.VehicleTypesId);
             return View(vehicles);
         }
 
@@ -86,8 +86,8 @@ namespace Garage3.Controllers
             {
                 return NotFound();
             }
-            ViewData["MemberId"] = new SelectList(_context.Set<Members>(), "Id", "Id", vehicles.MembersId);
-            ViewData["VehicleTypeId"] = new SelectList(_context.Set<VehicleTypes>(), "Id", "Id", vehicles.VehicleTypesId);
+            ViewData["MembersId"] = new SelectList(_context.Set<Members>(), "Id", "Id", vehicles.MembersId);
+            ViewData["VehicleTypesId"] = new SelectList(_context.Set<VehicleTypes>(), "Id", "Id", vehicles.VehicleTypesId);
             return View(vehicles);
         }
 
@@ -123,8 +123,8 @@ namespace Garage3.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MemberId"] = new SelectList(_context.Set<Members>(), "Id", "Id", vehicles.MembersId);
-            ViewData["VehicleTypeId"] = new SelectList(_context.Set<VehicleTypes>(), "Id", "Id", vehicles.VehicleTypesId);
+            ViewData["MembersId"] = new SelectList(_context.Set<Members>(), "Id", "Id", vehicles.MembersId);
+            ViewData["VehicleTypesId"] = new SelectList(_context.Set<VehicleTypes>(), "Id", "Id", vehicles.VehicleTypesId);
             return View(vehicles);
         }
 

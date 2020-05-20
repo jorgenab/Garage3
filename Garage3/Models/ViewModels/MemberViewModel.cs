@@ -11,10 +11,10 @@ namespace Garage3.Models.ViewModels
         public int Id { get; set; }
         [Display(Name = "Personal Number")]
         public string PersonNr { get; set; }
-
+        [Required]
         [Display(Name = "First Name")]
         public string FristName { get; set; }
-
+        [Required]
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
 

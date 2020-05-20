@@ -18,6 +18,7 @@ namespace Garage3.Models
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
+        public string FullName => $"{FristName} {LastName}";
         public ICollection<Vehicles> Vehicles { get; set; }
     }
 }
