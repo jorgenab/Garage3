@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Garage3.Models
@@ -36,6 +37,8 @@ namespace Garage3.Models
 
         public VehicleTypes VehicleType { get; set; }
         public Members Member { get; set; }
+
+        
 
     }
 }
