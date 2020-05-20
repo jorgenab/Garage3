@@ -19,10 +19,8 @@ namespace Garage3.Controllers
                 from => from.MapFrom(s =>s.Vehicles.Count));
                     
             CreateMap<Vehicles, DetailsViewModel>()
-
-            CreateMap<Student, StudentDetailsViewModel>()
                 .ForMember(
-                       dest => dest.Attending,
+                       dest => dest.Type,
                        from => from.MapFrom(s => s.Enrollments.Count))
                 .ForMember(
                        dest => dest.Courses,
