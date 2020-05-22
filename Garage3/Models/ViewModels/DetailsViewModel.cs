@@ -8,6 +8,8 @@ namespace Garage3.Models.ViewModels
 {
     public class DetailsViewModel
     {
+
+        public int Id { get; set; }
         [Display(Name = "Registration Number")]
         public string RegNumber { get; set; }
 
@@ -29,8 +31,8 @@ namespace Garage3.Models.ViewModels
          public string FullName { get; set; }
 
         //Forigen Keys
-        public int VehicleTypeId { get; set; }
-        public int MemberId { get; set; }
+        public int VehicleTypesId { get; set; }
+        public int MembersId { get; set; }
 
        
 
@@ -38,5 +40,6 @@ namespace Garage3.Models.ViewModels
 
         public VehicleTypes VehicleTypes { get; set; }
         public Members Members { get; set; }
+        public string TypeOfVehicle { get;  set; }
     }
 }
