@@ -19,6 +19,8 @@ namespace Garage3.Models.ViewModels
         public string LastName { get; set; }
 
         public string FullName => $"{FristName} {LastName}";
-        public ICollection<VehicleTypes> VehicleTypes { get; set; }
+        //public ICollection<VehicleTypes> VehicleTypes { get; set; }
+        public ICollection<Vehicles> Vehicles { get; set; }
+        
     }
 }

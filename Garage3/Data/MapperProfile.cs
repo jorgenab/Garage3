@@ -28,10 +28,11 @@ namespace Garage3.Controllers
 
             CreateMap<Members, MemberDetailsViewModel>()
                 .ForMember(
-                dest => dest.VehicleTypes,
-                from => from.MapFrom(s => s.Vehicles.Select(e => e.VehicleTypes).ToList())
-                );
-               
+                dest => dest.Vehicles,
+                from => from.MapFrom(s => s.Vehicles))
+               ;
+
+
 
         }
     }

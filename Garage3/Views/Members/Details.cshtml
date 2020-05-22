@@ -1,4 +1,4 @@
-﻿@model Garage3.Models.ViewModels.MemberDetailsViewModel
+﻿@model MemberDetailsViewModel
 
 @{
     ViewData["Title"] = "Details";
@@ -28,11 +28,15 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.LastName)
         </dd>
-        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.VehicleTypes)</dt>
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.Vehicles)</dt>
         <dd class="col-sm-10">
-            @foreach (var vehicleType in Model.VehicleTypes)
+            @foreach (var vehicle in Model.Vehicles)
             {
-                @vehicleType.TypeOfVehicle <br />
+
+            <a asp-controller="Vehicles" asp-action="Details" asp-route-id="@vehicle.Id">
+                @vehicle.RegNumber
+            </a><br />
+                 <br />
             }
         </dd>
     </dl>
