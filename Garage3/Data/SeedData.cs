@@ -17,14 +17,14 @@ namespace Garage3.Data
 
             using (var context = new Garage3Context(option))
             {
-                var fake = new Faker("sv");
+                //var fake = new Faker("sv");
                 var vehicles = new List<VehicleTypes>();
                 var typearr = new string[5] { "Airplane", "Boat", "Bus", "Car", "Moterbike" };
                 if (!context.VehicleTypes.Any())
                 {
                     for (int i = 0; i<5; i++)
                     {
-                        var ftype = typearr[i];
+                        string ftype = typearr[i];
                         var vehicleType = new VehicleTypes
                         {
                             TypeOfVehicle = ftype,
