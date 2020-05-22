@@ -137,7 +137,7 @@ namespace Garage3.Controllers
         }
 
         // GET: Vehicles/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> UnPark(int? id)
         {
             if (id == null)
             {
@@ -156,10 +156,10 @@ namespace Garage3.Controllers
             return View(vehicles);
         }
 
-        // POST: Vehicles/Delete/5
-        [HttpPost, ActionName("Delete")]
+        // POST: Vehicles/UnPark/5
+        [HttpPost, ActionName("UnPark")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> UnParkConfirmed(int id)
         {
             var vehicles = await _context.Vehicles.FindAsync(id);
             _context.Vehicles.Remove(vehicles);
