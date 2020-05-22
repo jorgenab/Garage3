@@ -33,12 +33,13 @@ namespace Garage3.Models
 
         //Forigen Keys
         [Required]
+        [Display(Name = "Type of Vehicle")]
         public int VehicleTypesId { get; set; }
         [Required]
+        [Display(Name = "Member")]
         public int MembersId { get; set; }
 
         //Navigation Properties
-
         public VehicleTypes VehicleTypes { get; set; }
         public Members Members { get; set; }
 

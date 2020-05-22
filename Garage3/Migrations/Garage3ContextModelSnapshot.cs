@@ -78,6 +78,7 @@ namespace Garage3.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("RegNumber")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("TimeOfParking")

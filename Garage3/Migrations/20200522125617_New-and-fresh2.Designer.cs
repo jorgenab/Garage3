@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Garage3.Migrations
 {
     [DbContext(typeof(Garage3Context))]
-    [Migration("20200522075548_New-and-fresh")]
-    partial class Newandfresh
+    [Migration("20200522125617_New-and-fresh2")]
+    partial class Newandfresh2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -80,6 +80,7 @@ namespace Garage3.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("RegNumber")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("TimeOfParking")
