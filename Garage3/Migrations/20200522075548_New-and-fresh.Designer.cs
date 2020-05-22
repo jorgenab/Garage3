@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Garage3.Migrations
 {
     [DbContext(typeof(Garage3Context))]
-    [Migration("20200519093026_Init")]
-    partial class Init
+    [Migration("20200522075548_New-and-fresh")]
+    partial class Newandfresh
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,6 +32,9 @@ namespace Garage3.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PersonNr")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -67,7 +70,7 @@ namespace Garage3.Migrations
                     b.Property<string>("Color")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("MemberId")
+                    b.Property<int>("MembersId")
                         .HasColumnType("int");
 
                     b.Property<string>("Model")
@@ -82,29 +85,29 @@ namespace Garage3.Migrations
                     b.Property<DateTime>("TimeOfParking")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("VehicleTypeId")
+                    b.Property<int>("VehicleTypesId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MemberId");
+                    b.HasIndex("MembersId");
 
-                    b.HasIndex("VehicleTypeId");
+                    b.HasIndex("VehicleTypesId");
 
                     b.ToTable("Vehicles");
                 });
 
             modelBuilder.Entity("Garage3.Models.Vehicles", b =>
                 {
-                    b.HasOne("Garage3.Models.Members", "Member")
-                        .WithMany("Vehicle")
-                        .HasForeignKey("MemberId")
+                    b.HasOne("Garage3.Models.Members", "Members")
+                        .WithMany("Vehicles")
+                        .HasForeignKey("MembersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Garage3.Models.VehicleTypes", "VehicleType")
-                        .WithMany("Vehicle")
-                        .HasForeignKey("VehicleTypeId")
+                    b.HasOne("Garage3.Models.VehicleTypes", "VehicleTypes")
+                        .WithMany("Vehicles")
+                        .HasForeignKey("VehicleTypesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

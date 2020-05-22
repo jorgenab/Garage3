@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 namespace Garage3.Models.ViewModels
 {
     public class DetailsViewModel
-    {
 
+    {
         public int Id { get; set; }
+
         [Display(Name = "Registration Number")]
         public string RegNumber { get; set; }
 
@@ -27,14 +28,16 @@ namespace Garage3.Models.ViewModels
         [Display(Name = "Vehicle Model")]
         public string Model { get; set; }
 
+        public string TypeOfVehicle { get; set; }
 
-         public string FullName { get; set; }
+
+        public string FullName { get; set; }
 
         //Forigen Keys
         public int VehicleTypeId { get; set; }
         public int MemberId { get; set; }
-        public string TypeOfVehicle { get; set; }
 
+       
 
         //Navigation Properties
 
