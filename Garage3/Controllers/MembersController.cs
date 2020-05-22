@@ -2,21 +2,26 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using Bogus;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Garage3.Data;
 using Garage3.Models;
+using Garage3.Models.ViewModels;
 
 namespace Garage3.Controllers
 {
     public class MembersController : Controller
     {
         private readonly Garage3Context _context;
+        private readonly IMapper mapper;
 
-        public MembersController(Garage3Context context)
+        public MembersController(Garage3Context context, IMapper mapper)
         {
             _context = context;
+            this.mapper = mapper;
         }
 
         // GET: Members1
@@ -26,22 +31,31 @@ namespace Garage3.Controllers
         }
 
         // GET: Members1/Details/5
+        //public async Task<IActionResult> Details(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    var members = await _context.Members
+        //        .FirstOrDefaultAsync(m => m.Id == id);
+        //    if (members == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return View(members);
+        //}
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            var vehicle = await mapper.ProjectTo<MemberDetailsViewModel>(_context.Members)
+                .FirstOrDefaultAsync(s => s.Id == id);
 
-            var members = await _context.Members
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (members == null)
-            {
-                return NotFound();
-            }
-
-            return View(members);
+            return View(vehicle);
         }
+
+
 
         // GET: Members1/Create
         public IActionResult Create()
