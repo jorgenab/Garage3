@@ -2,7 +2,7 @@
 
 namespace Garage3.Migrations
 {
-    public partial class Init010 : Migration
+    public partial class Newandfresh : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

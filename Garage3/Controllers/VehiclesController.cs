@@ -26,7 +26,7 @@ namespace Garage3.Controllers
         // GET: Vehicles
         public async Task<IActionResult> Index()
         {
-            var model = await mapper.Project<DetailsViewModel>(_context.Vehicles).ToListAsync();
+            var model = await mapper.ProjectTo<DetailsViewModel>(_context.Vehicles).ToListAsync();
             return View(model);
 
         }
@@ -49,9 +49,16 @@ namespace Garage3.Controllers
         // GET: Vehicles/Create
         public IActionResult Park(DetailsViewModel viewModel)
         {
+            var memberList = _context.Set<Members>()
+                .Select(x => new SelectListItem
+                {
+                    Value = x.Id.ToString(),
+                    Text = x.FullName
+                }).ToList();
 
-            ViewData["MembersId"] = new SelectList(_context.Set<Members>(), "Id", "Id");
-            ViewData["VehicleTypesId"] = new SelectList(_context.Set<VehicleTypes>(), "Id", "Id");
+            ViewData["MembersId"] = memberList;
+
+            ViewData["VehicleTypesId"] = new SelectList(_context.Set<VehicleTypes>(), "Id", "TypeOfVehicle");
             return View();
         }
 
@@ -60,10 +67,11 @@ namespace Garage3.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,RegNumber,TimeOfParking,Color,NumberOfWheels,Brand,Model,VehicleTypeId,MemberId")] Vehicles vehicles)
+        public async Task<IActionResult> Park([Bind("Id,RegNumber,TimeOfParking,Color,NumberOfWheels,Brand,Model,VehicleTypesId,MembersId")] Vehicles vehicles)
         {
             if (ModelState.IsValid)
             {
+                vehicles.TimeOfParking = DateTime.Now;
                 _context.Add(vehicles);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -96,7 +104,7 @@ namespace Garage3.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,RegNumber,TimeOfParking,Color,NumberOfWheels,Brand,Model,VehicleTypeId,MemberId")] Vehicles vehicles)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,RegNumber,TimeOfParking,Color,NumberOfWheels,Brand,Model,VehicleTypesId,MembersId")] Vehicles vehicles)
         {
             if (id != vehicles.Id)
             {
