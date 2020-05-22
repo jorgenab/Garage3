@@ -19,7 +19,7 @@ namespace Garage3.Models.ViewModels
         public string Color { get; set; }
 
         [Display(Name = "Number of Wheels")]
-        [Range(0, 10, ErrorMessage = "No more that 10 Wheels")]
+        [Range(0, 10, ErrorMessage = "No more than 10 Wheels")]
         public int NumberOfWheels { get; set; }
 
         [Display(Name = "Vehicle Brand")]

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace Garage3.Models
     {
         public int Id { get; set; }
 
+        [Required]
         [Display(Name = "Registration Number")]
         public string RegNumber { get; set; }
 
@@ -19,7 +21,7 @@ namespace Garage3.Models
         public string Color { get; set; }
 
         [Display(Name = "Number of Wheels")]
-        [Range(0,10, ErrorMessage = "No more that 10 Wheels")]
+        [Range(0,10, ErrorMessage = "No more than 10 Wheels")]
         public int NumberOfWheels { get; set; }
 
         [Display(Name = "Vehicle Brand")]
@@ -30,11 +32,14 @@ namespace Garage3.Models
 
 
         //Forigen Keys
+        [Required]
+        [Display(Name = "Type of Vehicle")]
         public int VehicleTypesId { get; set; }
+        [Required]
+        [Display(Name = "Member")]
         public int MembersId { get; set; }
 
         //Navigation Properties
-
         public VehicleTypes VehicleTypes { get; set; }
         public Members Members { get; set; }
 
