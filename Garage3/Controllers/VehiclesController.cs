@@ -26,7 +26,7 @@ namespace Garage3.Controllers
         // GET: Vehicles
         public async Task<IActionResult> Index()
         {
-            var model = await mapper.Project<DetailsViewModel>(_context.Vehicles).ToListAsync();
+            var model = await mapper.ProjectTo<DetailsViewModel>(_context.Vehicles).ToListAsync();
             return View(model);
 
         }
