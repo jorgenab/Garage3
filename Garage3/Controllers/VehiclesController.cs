@@ -26,8 +26,7 @@ namespace Garage3.Controllers
         // GET: Vehicles
         public async Task<IActionResult> Index()
         {
-            var model = await mapper.ProjectTo<DetailsViewModel>
-                (_context.Vehicles).ToListAsync();
+            var model = await mapper.ProjectTo<DetailsViewModel>(_context.Vehicles).ToListAsync();
             return View(model);
 
         }
@@ -50,9 +49,16 @@ namespace Garage3.Controllers
         // GET: Vehicles/Create
         public IActionResult Park(DetailsViewModel viewModel)
         {
+            var memberList = _context.Set<Members>()
+                .Select(x => new SelectListItem
+                {
+                    Value = x.Id.ToString(),
+                    Text = x.FullName
+                }).ToList();
 
-            ViewData["MembersId"] = new SelectList(_context.Set<Members>(), "Id", "Id");
-            ViewData["VehicleTypesId"] = new SelectList(_context.Set<VehicleTypes>(), "Id", "Id");
+            ViewData["MembersId"] = memberList;
+
+            ViewData["VehicleTypesId"] = new SelectList(_context.Set<VehicleTypes>(), "Id", "TypeOfVehicle");
             return View();
         }
 
@@ -65,14 +71,12 @@ namespace Garage3.Controllers
         {
             if (ModelState.IsValid)
             {
+                vehicles.TimeOfParking = DateTime.Now;
                 _context.Add(vehicles);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             ViewData["MembersId"] = new SelectList(_context.Set<Members>(), "Id", "Id", vehicles.MembersId);
-            ViewData["MembersId"] = new SelectList(_context.Set<Members>(), "Id", "Id", vehicles.MembersId);
-
-            ViewData["VehicleTypesId"] = new SelectList(_context.Set<VehicleTypes>(), "Id", "Id", vehicles.VehicleTypesId);
             ViewData["VehicleTypesId"] = new SelectList(_context.Set<VehicleTypes>(), "Id", "Id", vehicles.VehicleTypesId);
             return View(vehicles);
         }
