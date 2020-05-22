@@ -34,20 +34,26 @@ namespace Garage3.Controllers
         // GET: Vehicles/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            var vehicles = await mapper.ProjectTo<DetailsViewModel>
-                (_context.Vehicles).FirstOrDefaultAsync(s => s.Id == id);
+            if (id == null)
+            {
+                return NotFound();
+            }
 
-            
+            var vehicles = await _context.Vehicles
+                .Include(p => p.Members)
+                .Include(p => p.VehicleTypes)
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (vehicles == null)
             {
                 return NotFound();
             }
 
+           
             return View(vehicles);
         }
 
         // GET: Vehicles/Create
-        public IActionResult Park(DetailsViewModel viewModel)
+        public IActionResult Park()
         {
             var memberList = _context.Set<Members>()
                 .Select(x => new SelectListItem

@@ -15,6 +15,7 @@ namespace Garage3.Models.ViewModels
         public string RegNumber { get; set; }
 
         [Display(Name = "Time of Parking")]
+        [DisplayFormat(DataFormatString = "{0:f}")]
         public DateTime TimeOfParking { get; set; }
         public string Color { get; set; }
 
