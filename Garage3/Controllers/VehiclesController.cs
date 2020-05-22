@@ -195,5 +195,55 @@ namespace Garage3.Controllers
             return View(model);
 
         }
+
+        public async Task<IActionResult> Receipt(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var vehicle = await _context.Vehicles.FirstOrDefaultAsync(m => m.Id == id);
+
+
+            if (vehicle == null)
+            {
+                return NotFound();
+            }
+
+            var model = new ReceiptViewModel();
+            model.RegNumber = vehicle.RegNumber;
+
+            var MemberId = vehicle.MembersId;
+            var VehicleTypesId = vehicle.VehicleTypesId;
+            var memberDetails = await _context.Members.FirstOrDefaultAsync(m => m.Id == MemberId);
+            var vehicleTypeDetails = await _context.VehicleTypes.FirstOrDefaultAsync(m => m.Id == VehicleTypesId);
+
+            model.FullName = memberDetails.FullName;
+            model.TypeOfVehicle = vehicleTypeDetails.TypeOfVehicle;
+            model.CheckInTime = vehicle.TimeOfParking;
+            model.CheckOutTime = DateTime.Now;
+            var totaltime = model.CheckOutTime - model.CheckInTime;
+            var lessThanHr = (totaltime.Seconds > 0) ? 1 : 0;
+
+
+            if (totaltime.Days == 0)
+            {
+                model.TotalParkingTime = totaltime.Hours + " Hrs " + totaltime.Minutes + " Mins " + totaltime.Seconds + " Secs";
+                model.TotalPrice = ((totaltime.Hours + lessThanHr) * 15) + "Kr";
+            }
+            else
+            {
+                model.TotalParkingTime = totaltime.Days + "Days" + " " + totaltime.Hours + " hrs " + " " + totaltime.Minutes + " Mins " + +totaltime.Seconds + " Secs";
+                model.TotalPrice = (totaltime.Days * 100) + ((totaltime.Hours + lessThanHr) * 15) + "Kr";
+            }
+
+           
+            await _context.SaveChangesAsync();
+
+            return View(model);
+        }
+
+
     }
 }

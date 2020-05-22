@@ -61,9 +61,9 @@
         </dd class>
     </dl>
     
-    <form asp-action="Delete">
+    <form asp-action="UnPark">
         <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <input type="submit" value="Un Park" class="btn btn-danger" asp-action="Receipt" asp-for="Id"/> |
         <a asp-action="Index">Back to List</a>
     </form>
 </div>
