@@ -34,7 +34,7 @@
                 @Html.DisplayNameFor(model => model.VehicleTypes)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Members)
+                @Html.DisplayNameFor(model => model.Members)    
             </th>
             <th></th>
         </tr>
@@ -54,7 +54,9 @@
                     @Html.DisplayFor(modelItem => item.VehicleTypes.TypeOfVehicle)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Members.FullName)
+                    <a asp-controller="Members" asp-action="Details" asp-route-id="@item.Members.Id">
+                        @Html.DisplayFor(modelItem => item.Members.FullName)
+                        </a>
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

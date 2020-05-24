@@ -42,6 +42,7 @@ namespace Garage3.Models
 
         //Navigation Properties
         public VehicleTypes VehicleTypes { get; set; }
+        [Display(Name = "The Owner")]
         public Members Members { get; set; }
 
         
