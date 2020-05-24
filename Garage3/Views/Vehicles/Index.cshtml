@@ -1,13 +1,25 @@
-﻿@model IEnumerable<Garage3.Models.ViewModels.DetailsViewModel>
+﻿@model IEnumerable<DetailsViewModel>
 @{
     ViewData["Title"] = "Garage 3";
 }
 
 <h1>Parked Vehicles</h1>
+<form class="text-light bg-info border rounded-lg" asp-action="Search">
+    <div class="input-group m-auto">
+        <input type="text" name="VehicleType" class="form-control" placeholder="Search on Vehicle Type." />
+        <div class="input-group-append">
+            <input type="text" name="RegNumber" class="form-control" placeholder="Search on Reg No." />
+        </div>
+        <div class="input-group-append">
+            <button type="submit" class="btn btn-primary "><i class="fa fa-search">&emsp;Search</i></button>
+        </div>
+    </div>
+</form>
 
 <p>
     <a asp-action="Park">Park Vehicle</a>
 </p>
+
 <table class="table">
     <thead>
         <tr>

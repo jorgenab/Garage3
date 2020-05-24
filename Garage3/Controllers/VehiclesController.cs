@@ -59,6 +59,8 @@ namespace Garage3.Controllers
                 .Select(x => new SelectListItem
                 {
                     Value = x.Id.ToString(),
+
+                    // look for already registered personal No  
                     Text = x.FullName
                 }).ToList();
 
@@ -244,6 +246,22 @@ namespace Garage3.Controllers
             return View(model);
         }
 
+        // GET: Vehicles/Search By Reg Nr or Vehicle Type
+        public async Task<IActionResult> Search(string vehicleType, string regNumber)
+        {
+            var vehicles = _context.Vehicles;
+            var model = await mapper.ProjectTo<DetailsViewModel>(vehicles).ToListAsync();
+
+            model = string.IsNullOrWhiteSpace(vehicleType) ?
+                model :
+                model.Where(p => p.TypeOfVehicle.ToLower().Equals(vehicleType.ToLower())).ToList();
+
+            model = regNumber == null ?
+                model :
+                model.Where(m => m.RegNumber.ToLower().Contains(regNumber.ToLower())).ToList();
+
+            return View(nameof(Index), model);
+        }
 
     }
 }
