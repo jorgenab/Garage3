@@ -112,7 +112,7 @@ namespace Garage3.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,RegNumber,TimeOfParking,Color,NumberOfWheels,Brand,Model,VehicleTypesId,MembersId")] Vehicles vehicles)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,RegNumber,Color,NumberOfWheels,Brand,Model,VehicleTypesId,MembersId")] Vehicles vehicles)
         {
             if (id != vehicles.Id)
             {
@@ -123,8 +123,24 @@ namespace Garage3.Controllers
             {
                 try
                 {
-                    _context.Update(vehicles);
-                    await _context.SaveChangesAsync();
+                    var editPostData = await _context.Vehicles.FindAsync(id);
+                    if (editPostData == null)
+                    {
+                        return NotFound();
+
+                    }
+                    else
+                    {
+                        
+                        editPostData.RegNumber = vehicles.RegNumber;
+                        editPostData.Color = vehicles.Color;
+                        editPostData.Brand = vehicles.Brand;
+                        editPostData.Model = vehicles.Model;
+                        editPostData.NumberOfWheels = vehicles.NumberOfWheels;
+
+                        await _context.SaveChangesAsync();
+                    }
+
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -213,7 +229,7 @@ namespace Garage3.Controllers
                 return NotFound();
             }
 
-            var model = new ReceiptViewModel();
+            ReceiptViewModel model = new ReceiptViewModel();
             model.RegNumber = vehicle.RegNumber;
 
             var MemberId = vehicle.MembersId;
@@ -232,7 +248,7 @@ namespace Garage3.Controllers
             if (totaltime.Days == 0)
             {
                 model.TotalParkingTime = totaltime.Hours + " Hrs " + totaltime.Minutes + " Mins " + totaltime.Seconds + " Secs";
-                model.TotalPrice = ((totaltime.Hours + lessThanHr) * 15) + "Kr";
+                model.TotalPrice = ((totaltime.Hours + lessThanHr) * 15) + " Kr";
             }
             else
             {
@@ -240,7 +256,7 @@ namespace Garage3.Controllers
                 model.TotalPrice = (totaltime.Days * 100) + ((totaltime.Hours + lessThanHr) * 15) + "Kr";
             }
 
-           
+            //_context.Vehicles.Remove(vehicle);
             await _context.SaveChangesAsync();
 
             return View(model);
