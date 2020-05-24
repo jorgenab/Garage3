@@ -29,8 +29,7 @@ namespace Garage3.Controllers
             CreateMap<Members, MemberDetailsViewModel>()
                 .ForMember(
                 dest => dest.Vehicles,
-                from => from.MapFrom(s => s.Vehicles))
-               ;
+                from => from.MapFrom(s => s.Vehicles));
 
 
 

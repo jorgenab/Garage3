@@ -23,6 +23,18 @@ namespace Garage3.Controllers
             _context = context;
             this.mapper = mapper;
         }
+        public async Task<IActionResult> Filter(string PersonalNumber, int? vehicleType)
+        {
+
+            var model = string.IsNullOrWhiteSpace(PersonalNumber) ?
+                   _context.Members :
+                    _context.Members.Where(rn => rn.PersonNr
+                                 .Contains(PersonalNumber));
+            
+
+
+            return View(nameof(Index), await model.ToListAsync());
+        }
 
         // GET: Members1
         public async Task<IActionResult> Index()
