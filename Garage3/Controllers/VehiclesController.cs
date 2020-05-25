@@ -47,6 +47,9 @@ namespace Garage3.Controllers
                     break;
             }
             //model = await mapper.ProjectTo<DetailsViewModel>(_context.Vehicles).ToListAsync();
+            //model = model.Where(s => s.Parking == true);
+                    
+
             return View(await model.ToListAsync());
 
         }
@@ -100,12 +103,28 @@ namespace Garage3.Controllers
             if (ModelState.IsValid)
             {
                 vehicles.TimeOfParking = DateTime.Now;
-                _context.Add(vehicles);
+
+                // Check whether the Vehicle with same Registration Number is Parked or not
+                var findRegistrationNr = _context.Vehicles
+                    .Where(rn => rn.RegNumber == vehicles.RegNumber).ToList();
+                if (findRegistrationNr.Count == 0)
+                {
+                    _context.Add(vehicles);
+                }
+                else
+                {
+                    ModelState.AddModelError("RegNumber", "Vehicle with same Registration Number is already Parked");
+                    ViewData["MembersId"] = new SelectList(_context.Set<Members>(), "Id", "FullName");
+                    ViewData["VehicleTypesId"] = new SelectList(_context.Set<VehicleTypes>(), "Id", "TypeOfVehicle");
+                    return View(vehicles);
+
+                }
+               
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MembersId"] = new SelectList(_context.Set<Members>(), "Id", "Id", vehicles.MembersId);
-            ViewData["VehicleTypesId"] = new SelectList(_context.Set<VehicleTypes>(), "Id", "Id", vehicles.VehicleTypesId);
+            ViewData["MembersId"] = new SelectList(_context.Set<Members>(), "Id", "FullName");
+            ViewData["VehicleTypesId"] = new SelectList(_context.Set<VehicleTypes>(), "Id", "TypeOfVehicle");
             return View(vehicles);
         }
 

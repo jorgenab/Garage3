@@ -82,13 +82,26 @@ namespace Garage3.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,PersonNr,FristName,LastName")] Members members)
         {
+            
             if (ModelState.IsValid)
             {
-                _context.Add(members);
+                var findPersonNumber = _context.Members
+                    .Where(rn => rn.PersonNr == members.PersonNr).ToList();
+                if (findPersonNumber.Count == 0)
+                {
+                    _context.Add(members);
+                }
+                else
+                {
+                    ModelState.AddModelError("PersonNr", "Member with same Person Number already Exist");
+                    return View();
+
+                }
+                
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(members);
+           return View(members);
         }
 
         // GET: Members1/Edit/5
