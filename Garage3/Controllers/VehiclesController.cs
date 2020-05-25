@@ -24,10 +24,30 @@ namespace Garage3.Controllers
         }
 
         // GET: Vehicles
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder)
         {
-            var model = await mapper.ProjectTo<DetailsViewModel>(_context.Vehicles).ToListAsync();
-            return View(model);
+
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+            var model = mapper.ProjectTo<DetailsViewModel>(_context.Vehicles);
+                          
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    model = model.OrderByDescending(s => s.RegNumber);
+                    break;
+                case "Date":
+                    model = model.OrderBy(s => s.TimeOfParking);
+                    break;
+                case "date_desc":
+                    model = model.OrderByDescending(s => s.TimeOfParking);
+                    break;
+                default:
+                    model = model.OrderBy(s => s.RegNumber);
+                    break;
+            }
+            //model = await mapper.ProjectTo<DetailsViewModel>(_context.Vehicles).ToListAsync();
+            return View(await model.ToListAsync());
 
         }
 
