@@ -280,22 +280,22 @@ namespace Garage3.Controllers
             model.TypeOfVehicle = vehicleTypeDetails.TypeOfVehicle;
             model.CheckInTime = vehicle.TimeOfParking;
             model.CheckOutTime = DateTime.Now;
-            var totaltime = model.CheckOutTime - model.CheckInTime;
-            var lessThanHr = (totaltime.Seconds > 0) ? 1 : 0;
+            var totalTime = model.CheckOutTime - model.CheckInTime;
+            var lessThanHr = (totalTime.Seconds > 0) ? 1 : 0;
 
 
-            if (totaltime.Days == 0)
+            if (totalTime.Days == 0)
             {
-                model.TotalParkingTime = totaltime.Hours + " Hrs " + totaltime.Minutes + " Mins " + totaltime.Seconds + " Secs";
-                model.TotalPrice = ((totaltime.Hours + lessThanHr) * 15) + " Kr";
+                model.TotalParkingTime = totalTime.Hours + " Hrs " + totalTime.Minutes + " Mins " + totalTime.Seconds + " Secs";
+                model.TotalPrice = ((totalTime.Hours + lessThanHr) * 20) + " Kr";
             }
             else
             {
-                model.TotalParkingTime = totaltime.Days + "Days" + " " + totaltime.Hours + " hrs " + " " + totaltime.Minutes + " Mins " + +totaltime.Seconds + " Secs";
-                model.TotalPrice = (totaltime.Days * 100) + ((totaltime.Hours + lessThanHr) * 15) + "Kr";
+                model.TotalParkingTime = totalTime.Days + "Days" + " " + totalTime.Hours + " hrs " + " " + totalTime.Minutes + " Mins " + +totalTime.Seconds + " Secs";
+                model.TotalPrice = (totalTime.Days * 150) + ((totalTime.Hours + lessThanHr) * 20) + "Kr";
             }
 
-            //_context.Vehicles.Remove(vehicle);
+            _context.Vehicles.Remove(vehicle);
             await _context.SaveChangesAsync();
 
             return View(model);
@@ -309,7 +309,7 @@ namespace Garage3.Controllers
 
             model = string.IsNullOrWhiteSpace(vehicleType) ?
                 model :
-                model.Where(p => p.TypeOfVehicle.ToLower().Equals(vehicleType.ToLower())).ToList();
+                model.Where(p => p.TypeOfVehicle.ToLower().Contains(vehicleType.ToLower())).ToList();
 
             model = regNumber == null ?
                 model :

@@ -9,7 +9,9 @@ namespace Garage3.Models
     public class Members
     {
         public int Id { get; set; }
+
         [Display(Name = "Personal Number")]
+        [Range(10,12)]
         public string PersonNr { get; set; }
 
         [Display(Name = "First Name")]
