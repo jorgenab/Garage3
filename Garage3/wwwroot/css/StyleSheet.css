@@ -16,23 +16,21 @@ table {
 }
 
 .receipt {
+    font-family: "Courier", monospace;
     background-color: rgba(255, 255, 255, 0.58);
     padding: 20px;
     border: 2px solid gray;
 }
 
-.member-vehicles {
-    background-color: rgba(255, 255, 255, 0.58);
-    padding: 20px;
-}
 
 
-.profile {
+
+.card {
     box-shadow: 0 3px 15px rgba(51, 51, 51, 0.2);
     background-color: rgba(255, 255, 255, 0.58);
     border-radius: 3%;
 }
-footer {
+.footer {
     background-color: rgba(255, 255, 255, 0.58);
     border-radius: 3%;
     color : red;
