@@ -78,17 +78,7 @@ namespace Garage3.Controllers
         // GET: Vehicles/Create
         public IActionResult Park()
         {
-            var memberList = _context.Set<Members>()
-                .Select(x => new SelectListItem
-                {
-                    Value = x.Id.ToString(),
-
-                    // look for already registered personal No  
-                    Text = x.FullName
-                }).ToList();
-
-            ViewData["MembersId"] = memberList;
-
+            ViewData["MembersId"] = new SelectList(_context.Set<Members>(), "Id", "FullName");
             ViewData["VehicleTypesId"] = new SelectList(_context.Set<VehicleTypes>(), "Id", "TypeOfVehicle");
             return View();
         }
