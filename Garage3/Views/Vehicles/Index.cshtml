@@ -24,17 +24,25 @@
     <thead>
         <tr>
             <th>
+                @Html.ActionLink("Register Number", "Index", new { sortOrder = ViewBag.NameSortParm })
+            </th>
+           
+            <th>
+                @Html.ActionLink("Time Of Parking", "Index", new { sortOrder = ViewBag.DateSortParm })
+            </th>
+            
+            @*<th>
                 @Html.DisplayNameFor(model => model.RegNumber)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.TimeOfParking)
-            </th>
+            </th>*@
 
             <th>
                 @Html.DisplayNameFor(model => model.VehicleTypes)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Members)    
+                @Html.DisplayNameFor(model => model.Members)
             </th>
             <th></th>
         </tr>
